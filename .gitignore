@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment & secrets
+.env
+.env.local
+*.key
+*.pem
+
+# Editors
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Data (we never want raw datasets in the repo)
+data/
+*.csv
+*.parquet
+
+# Docker volumes (handled by Docker, not stored in repo)
+*.log
+
+# uv
+.uv-cache/

@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    name: lint + type-check + unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Install dependencies (incl. dev group)
+        run: uv sync --group dev
+
+      - name: Ruff
+        run: uv run ruff check .
+
+      - name: Mypy (business-logic modules)
+        run: uv run mypy services shared
+
+      - name: Pytest (unit only; exclude e2e)
+        run: uv run pytest -m "not e2e" -v
+
+  docker-build:
+    name: docker compose build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build all images
+        run: |
+          cp .env.example .env
+          docker compose -f infra/docker-compose.yml build
