@@ -3,7 +3,7 @@
 End-to-end demo of Pulse agentic lakehouse build; the commands and expected outputs are what to Input and
 what should appear on screen.
 
-## Prep checklist (do once, before hitting record)
+## Prep checklist
 
 ```powershell
 # 1. Stack should be running and healthy
